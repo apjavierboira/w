@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda — Inicio</title>
+  <meta name="description" content="Página principal de tienda con oferta destacada" />
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --surface: rgba(255,255,255,.06);
+      --surface-2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.12);
+      --brand: #7dd3fc;
+      --brand-2: #a78bfa;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(125,211,252,.25), transparent 55%),
+        radial-gradient(900px 500px at 80% 0%, rgba(167,139,250,.22), transparent 50%),
+        var(--bg);
+      line-height: 1.4;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Layout helpers */
+    .container{
+      width: min(100% - 32px, var(--max));
+      margin-inline: auto;
+    }
+
+    /* Header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+    .logo{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 8px 20px rgba(125,211,252,.18);
+    }
+
+    .nav-actions{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .search{
+      flex: 1;
+      max-width: 520px;
+      display: none; /* se muestra a partir de tablet */
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .search svg{ opacity: .8; }
+    .search input{
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ background: var(--surface-2); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(125,211,252,.25), rgba(167,139,250,.22));
+      border-color: rgba(125,211,252,.28);
+    }
+
+    @media (min-width: 720px){
+      .search{ display: flex; }
+    }
+
+    /* Hero */
+    .hero{
+      padding: 34px 0 18px;
+    }
+    .hero-card{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 22px;
+      border-radius: calc(var(--radius) + 6px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      inset: -2px;
+      background: radial-gradient(600px 220px at 20% 0%, rgba(125,211,252,.16), transparent 60%),
+                  radial-gradient(500px 200px at 85% 20%, rgba(167,139,250,.14), transparent 55%);
+      pointer-events: none;
+    }
+    .hero-content{
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+    }
+    .kicker{
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .4px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    h1{
+      margin: 0;
+      font-size: clamp(26px, 2.6vw, 38px);
+      line-height: 1.1;
+    }
+    .hero-content p{
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+    .hero-cta{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Oferta */
+    main{
+      padding: 10px 0 46px;
+    }
+    .section-head{
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 22px 0 12px;
+    }
+    .section-head h2{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .section-head .hint{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid{
+      display: grid;
+      gap: 14px;
+      /* Responsive: 1 col móvil, 2 col tablet, 3 col escritorio */
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 560px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px){
+      .grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .product{
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0,0,0,.22);
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 320px;
+    }
+    .product:hover{
+      transform: translateY(-2px);
+      background: var(--surface-2);
+      border-color: rgba(125,211,252,.24);
+    }
+
+    .media{
+      aspect-ratio: 4 / 3;
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.16), rgba(167,139,250,.14));
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .badge{
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+    .media .placeholder{
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255,255,255,.25);
+      background: rgba(0,0,0,.12);
+    }
+
+    .content{
+      padding: 14px 14px 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .title-row{
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .product h3{
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .desc{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .price-row{
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+    .price{
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .price-old{
+      color: rgba(255,255,255,.55);
+      text-decoration: line-through;
+      font-size: 13px;
+    }
+    .actions{
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .actions .btn{
+      width: 100%;
+      justify-content: center;
+    }
+    @media (min-width: 560px){
+      .actions .btn{ width: auto; }
+    }
+
+    /* Footer */
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-row{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav" aria-label="Barra de navegación">
+      <a class="brand" href="#" aria-label="Inicio">
+        <span class="logo" aria-hidden="true"></span>
+        <span>MiTienda</span>
+      </a>
+
+      <div class="nav-actions">
+        <form class="search" role="search" aria-label="Buscar productos">
+          <!-- Placeholder buscador -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input type="search" placeholder="Buscar (placeholder)" />
+        </form>
+
+        <a class="btn" href="#" aria-label="Ver cuenta">Cuenta</a>
+        <a class="btn primary" href="#" aria-label="Ver carrito">Carrito</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="kicker">Oferta destacada</div>
+          <h1>Los mejores productos, bien presentados.</h1>
+          <p>
+            Este es un template para la home. Debajo tienes 6 tarjetas (2 filas de 3 en escritorio)
+            con huecos listos para rellenar desde tu código.
+          </p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#">Ver ofertas</a>
+            <a class="btn" href="#">Novedades</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="section-head">
+        <h2>Oferta de la semana</h2>
+        <div class="hint">6 productos · responsive</div>
+      </div>
+
+      <section class="grid" aria-label="Listado de productos en oferta">
+        <!-- PRODUCTO 1 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <!-- Placeholder de imagen -->
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <div class="title-row">
+              <h3>Nombre del producto</h3>
+            </div>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 2 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <h3>Nombre del producto</h3>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 3 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <h3>Nombre del producto</h3>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 4 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <h3>Nombre del producto</h3>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 5 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <h3>Nombre del producto</h3>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 6 -->
+        <article class="product">
+          <div class="media">
+            <span class="badge">-XX%</span>
+            <div class="placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="content">
+            <h3>Nombre del producto</h3>
+            <p class="desc">Descripción corta del producto (placeholder).</p>
+            <div class="price-row">
+              <div class="price">€00,00</div>
+              <div class="price-old">€00,00</div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="#">Añadir al carrito</a>
+              <a class="btn" href="#">Ver detalles</a>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div>© <span id="year">2026</span> MiTienda — Template</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- (Opcional) Si no quieres nada de JS, borra este script. Solo pone el año actual -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
